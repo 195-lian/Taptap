@@ -1,0 +1,257 @@
+/* 封面页 — 3D 展台风格（素材未到时用 CSS 占位） */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:none}
+:root{
+  --shell:#3A2416;--ink:#4A3222;--gold:#FFC53D;--gold2:#E8A317;
+  --cream:#FFF6E8;--soft:#FFE29A;--line:#E8C9A0;
+  --font:"PingFang SC","Microsoft YaHei",sans-serif;
+}
+html,body{height:100%;background:#140f0c;font-family:var(--font);overflow:hidden;user-select:none}
+#app{
+  width:min(420px,100vw);height:100dvh;margin:0 auto;position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#4a3020 0%,#3A2416 45%,#1a1008 100%);
+  color:var(--cream);
+}
+
+/* —— 封面舞台 —— */
+#screen-cover{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  perspective:900px;transform-style:preserve-3d;
+}
+#screen-cover.leave{animation:coverOut .45s ease-in forwards}
+@keyframes coverOut{to{opacity:0;transform:scale(1.06)}}
+
+.stage3d{
+  position:absolute;inset:0;overflow:hidden;
+  transform-style:preserve-3d;pointer-events:none;
+}
+.stage3d .layer{position:absolute;inset:0;pointer-events:none}
+.stage3d .bg{
+  background-image:var(--cover-bg, none);
+  background-size:cover;background-position:center 40%;
+  filter:brightness(.55) saturate(.9);
+  animation:kb 20s ease-in-out infinite alternate;
+  transform-origin:50% 42%;
+}
+.stage3d .bg.fallback{
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 42%, rgba(255,197,61,.35) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(20,10,4,.7) 0%, transparent 50%),
+    linear-gradient(180deg,#5c3d28,#3A2416 50%,#1a1008);
+  filter:none;animation:none;
+}
+.stage3d .rays{
+  background:conic-gradient(from 0deg at 50% 40%,
+    transparent 0deg,rgba(255,210,120,.14) 25deg,transparent 50deg,
+    transparent 120deg,rgba(255,200,80,.1) 150deg,transparent 180deg,
+    transparent 240deg,rgba(255,220,140,.12) 270deg,transparent 310deg);
+  mix-blend-mode:screen;animation:spin 32s linear infinite;opacity:.85;
+}
+.stage3d .vig{
+  background:radial-gradient(ellipse 75% 55% at 50% 40%, transparent 30%, rgba(10,5,2,.65) 100%);
+}
+.stage3d .pillar{
+  background:linear-gradient(180deg, transparent 20%, rgba(255,197,61,.22) 45%, transparent 75%);
+  clip-path:polygon(38% 0,62% 0,78% 100%,22% 100%);
+  opacity:.7;animation:breathe 3s ease-in-out infinite;
+}
+@keyframes kb{0%{transform:scale(1.08)}100%{transform:scale(1.16) translate(-2%,1%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{opacity:.45}50%{opacity:.85}}
+
+#cover-particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9}
+
+/* 前景视差容器 */
+.parallax-wrap{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;padding:48px 24px 32px;z-index:2;
+  transform-style:preserve-3d;transition:transform .2s ease-out;pointer-events:none;
+}
+.parallax-wrap .hit{pointer-events:auto}
+
+/* 标题 */
+.logo{
+  margin-top:8px;text-align:center;
+  animation:fadeUp .8s ease-out .2s both;
+}
+.logo h1{
+  font-size:34px;font-weight:900;letter-spacing:4px;color:#FFF8EC;
+  text-shadow:
+    0 2px 0 #C4841A,
+    0 4px 0 #A67C52,
+    0 8px 18px rgba(0,0,0,.55),
+    0 0 28px rgba(255,197,61,.35);
+  line-height:1.15;
+}
+.logo h1 .bracket{color:var(--gold);opacity:.9}
+.logo .sub{
+  margin-top:8px;font-size:12px;color:var(--soft);font-weight:700;letter-spacing:2px;
+  text-shadow:0 1px 4px #000;
+}
+.logo .logo-img{
+  max-width:280px;height:auto;display:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5));
+}
+
+/* 金蛋区 */
+.hero-egg{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;position:relative;min-height:0;
+}
+.egg-stage{
+  position:relative;width:200px;height:240px;display:flex;align-items:center;justify-content:center;
+  animation:fadeUp .9s ease-out .45s both;cursor:pointer;
+  transform-style:preserve-3d;
+}
+.egg-stage:active{transform:scale(.96)}
+.egg-stage.punch{animation:punch .35s ease-out}
+@keyframes punch{
+  0%{transform:scale(1)}
+  40%{transform:scale(.92) translateY(4px)}
+  70%{transform:scale(1.06)}
+  100%{transform:scale(1)}
+}
+.egg-glow{
+  position:absolute;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,197,61,.45) 0%,transparent 65%);
+  animation:breathe 2.4s ease-in-out infinite;pointer-events:none;
+}
+.egg-base{
+  position:absolute;bottom:18px;width:140px;height:28px;border-radius:50%;
+  background:linear-gradient(180deg,#8B6914,#5C4033);
+  box-shadow:0 8px 16px rgba(0,0,0,.45), inset 0 2px 0 rgba(255,220,140,.35);
+}
+.egg-body{
+  position:relative;width:120px;height:150px;border-radius:50% 50% 46% 46%;
+  background:
+    radial-gradient(ellipse 40% 30% at 32% 28%, rgba(255,255,255,.85), transparent 50%),
+    linear-gradient(160deg,#FFF8EC 0%,#FFE8C0 45%,#E8C48A 100%);
+  border:3px solid #5C4033;
+  box-shadow:
+    0 16px 28px rgba(0,0,0,.4),
+    inset 0 -12px 20px rgba(200,140,60,.25),
+    0 0 40px rgba(255,197,61,.35);
+  animation:float 3.6s ease-in-out infinite;
+  transform-style:preserve-3d;
+}
+.egg-body .rim{
+  position:absolute;inset:-6px;border-radius:inherit;border:2px solid rgba(255,197,61,.35);
+  filter:blur(2px);animation:breathe 2.4s ease-in-out infinite;
+}
+.egg-body img{
+  width:100%;height:100%;object-fit:contain;display:none;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.45));
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.egg-hint{
+  margin-top:6px;font-size:11px;color:var(--soft);opacity:.75;text-align:center;
+  animation:fadeUp .8s ease-out .8s both;
+}
+
+/* 底部操作 */
+.cover-bottom{
+  width:100%;max-width:320px;display:flex;flex-direction:column;gap:10px;align-items:center;
+  animation:fadeUp .8s ease-out 1s both;pointer-events:auto;
+}
+.btn-start{
+  width:100%;height:56px;border:none;border-radius:999px;cursor:pointer;
+  background:linear-gradient(180deg,#FFE08A,#FFC53D 45%,#F0A81E);
+  border:2px solid #E8A317;color:#4A3222;font-family:var(--font);
+  font-size:20px;font-weight:900;letter-spacing:6px;
+  box-shadow:0 6px 0 #C4841A, 0 12px 24px rgba(0,0,0,.35);
+  transition:transform .08s, box-shadow .08s;
+}
+.btn-start:active{transform:translateY(3px);box-shadow:0 3px 0 #C4841A}
+.btn-start:disabled{opacity:.45;cursor:default;transform:none}
+
+.load-wrap{width:100%;display:flex;flex-direction:column;gap:6px;align-items:center}
+.load-bar{
+  width:100%;height:6px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden
+}
+.load-bar i{
+  display:block;height:100%;width:0%;border-radius:99px;
+  background:linear-gradient(90deg,#FFE08A,#FFC53D);transition:width .25s ease
+}
+.load-text{font-size:11px;color:var(--soft);font-weight:700}
+
+.cover-meta{
+  position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:space-between;
+  padding:0 16px;font-size:10px;color:rgba(255,246,232,.45);z-index:3;pointer-events:none
+}
+.cover-meta .sound{
+  pointer-events:auto;background:none;border:1px solid rgba(255,232,154,.4);
+  color:var(--soft);border-radius:99px;padding:4px 10px;font-size:11px;cursor:pointer
+}
+
+/* 过场闪光 */
+#flash{
+  position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,#fff 0%,var(--gold) 35%,transparent 70%);
+  opacity:0;pointer-events:none;z-index:20
+}
+#flash.on{animation:flash .4s ease-out}
+@keyframes flash{0%{opacity:0}30%{opacity:.95}100%{opacity:0}}
+
+/* —— 主页占位（红框结构） —— */
+#screen-home{
+  position:absolute;inset:0;display:none;flex-direction:column;padding:16px 16px 20px;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,197,61,.12), transparent 50%),
+    linear-gradient(180deg,#3A2416,#1a1008);
+}
+#screen-home.active{display:flex;animation:homeIn .4s ease-out}
+@keyframes homeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+.home-top{display:flex;gap:8px;align-items:center}
+.home-chip{
+  background:rgba(255,255,255,.94);border-radius:12px;padding:6px 12px;
+  font-weight:900;font-size:14px;color:#4A3222;display:inline-flex;align-items:center;gap:6px
+}
+.home-chip .dot{width:8px;height:8px;border-radius:50%;background:#FF5A5F}
+.home-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px
+}
+.home-tile{
+  aspect-ratio:1;border-radius:20px;border:2px solid transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  font-weight:900;font-size:18px;cursor:pointer;position:relative;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);transition:transform .08s
+}
+.home-tile:active{transform:scale(.96)}
+.home-tile .ico{
+  width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;font-size:24px
+}
+.home-tile .badge{
+  position:absolute;top:10px;right:10px;width:10px;height:10px;border-radius:50%;
+  background:#FF5A5F;border:2px solid #fff
+}
+.home-tile.smash{background:linear-gradient(180deg,#FFE08A,#F0A81E);border-color:#E8A317;color:#4A3222}
+.home-tile.stage{background:linear-gradient(180deg,#F0D9A8,#C4925C);border-color:#C4925C;color:#4A3222}
+.home-tile.weapon{background:linear-gradient(180deg,#C4B5FD,#7C3AED);border-color:#5B21B6;color:#FFF8EC}
+.home-tile.ticket{background:linear-gradient(180deg,#6EE7B7,#10B981);border-color:#059669;color:#fff}
+.home-tile .ico{font-style:normal}
+
+.home-bottom{
+  margin-top:auto;display:flex;gap:12px;align-items:stretch
+}
+.home-cta{
+  flex:1;height:56px;border:none;border-radius:18px;cursor:pointer;
+  background:linear-gradient(180deg,#FFE08A,#FFC53D 45%,#F0A81E);
+  border:2px solid #E8A317;color:#4A3222;font-family:var(--font);
+  font-size:20px;font-weight:900;letter-spacing:4px
+}
+.home-sound{
+  width:64px;border-radius:14px;border:2px solid var(--line);
+  background:rgba(255,255,255,.12);color:var(--soft);font-size:20px;cursor:pointer
+}
+.home-toast{
+  position:absolute;left:50%;bottom:22%;transform:translateX(-50%);
+  background:rgba(20,12,8,.9);color:#FFF8EC;padding:10px 16px;border-radius:999px;
+  font-size:13px;font-weight:700;z-index:30;pointer-events:none;
+  opacity:0;transition:opacity .2s
+}
+.home-toast.show{opacity:1}
+
+@media (prefers-reduced-motion: reduce){
+  .stage3d .bg,.stage3d .rays,.stage3d .pillar,.egg-body,.egg-glow{animation:none}
+}

@@ -53,3 +53,11 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+.DS_Store
+.playwright-cli/
+
+# Local credentials
+.env
+.env.*
+!.env.example

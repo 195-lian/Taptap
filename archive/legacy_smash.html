@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <title>砸蛋肉鸽：越砸越爽</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div id="app">
+    <!-- 1 HOME -->
+    <section id="screen-home" class="screen active">
+      <div class="hud">
+        <div class="chip"><img src="assets/web/icon_coin.webp" alt=""/><span id="home-gold">0</span></div>
+        <div class="chip"><img src="assets/web/icon_shard.webp" alt=""/><span id="home-shard">0</span></div>
+      </div>
+      <header class="title">
+        <b>砸蛋肉鸽</b>
+        <span>越砸越爽</span>
+      </header>
+      <div class="hero" id="home-hero">
+        <img id="home-egg" class="egg" src="assets/web/icon_egg_full.webp" alt="蛋"/>
+        <p class="hint">点蛋预览 · 下方开始正式局</p>
+      </div>
+      <div class="mid">
+        <div class="panel">
+          <div class="row1">
+            <span id="unlock-label">解锁青铜蛋</span>
+            <span id="unlock-text">0/50</span>
+          </div>
+          <div class="bar"><i id="unlock-bar"></i></div>
+          <button class="btn-unlock" id="btn-unlock-egg" type="button" disabled>碎片不足</button>
+          <button class="btn-unlock" id="btn-switch-egg" type="button" hidden>切换蛋种</button>
+        </div>
+        <button class="vault-btn" id="btn-vault" type="button">
+          <img src="assets/web/icon_vault.webp" alt=""/>
+          <span class="badge" id="vault-badge">0</span>
+          金库
+        </button>
+      </div>
+      <footer class="footer">
+        <button class="btn-primary" id="btn-start" type="button">开始砸蛋</button>
+        <button class="btn-ghost" id="btn-free-hammer" type="button">
+          <img src="assets/web/icon_ad.webp" alt=""/>
+          <span id="free-hammer-label">免费金锤 +30 · 看广告</span>
+        </button>
+        <button class="btn-ghost" id="btn-upgrade" type="button">
+          <img src="assets/web/icon_hammer_wood.webp" alt=""/>
+          <span id="upgrade-label">锤子 Lv1 · 升级 100</span>
+        </button>
+      </footer>
+    </section>
+
+    <!-- 2 RUN -->
+    <section id="screen-run" class="screen">
+      <div class="hud">
+        <div class="chip"><img src="assets/web/icon_coin.webp" alt=""/><span id="run-gold">0</span></div>
+        <div class="chip" id="run-combo">连击 ×0</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="meta">
+          <span>本局时间</span>
+          <span id="run-timer">90s</span>
+        </div>
+        <div class="progress"><i id="run-bar"></i></div>
+      </div>
+      <div class="stage" id="stage">
+        <img id="run-egg" class="egg" src="assets/web/icon_egg_full.webp" alt="蛋"/>
+        <div id="float-layer" class="float-layer"></div>
+      </div>
+      <p class="hint stage-hint" id="run-hint">全屏可点砸蛋</p>
+      <div class="egg-kind" id="egg-kind" hidden></div>
+      <div class="run-shop">
+        <button type="button" id="shop-affix" data-cost="50">词条 +50</button>
+        <button type="button" id="shop-smash" data-cost="80">秒碎 80</button>
+        <button type="button" id="shop-auto" data-cost="120">自动锤 120</button>
+        <button type="button" id="shop-five" data-cost="200">五选一 200</button>
+      </div>
+      <div class="affix">
+        <div class="lbl">本局词条</div>
+        <div class="list" id="affix-list"></div>
+      </div>
+      <footer class="footer">
+        <button class="btn-ghost" id="btn-end" type="button">结束本局</button>
+      </footer>
+    </section>
+
+    <!-- 3 PICK -->
+    <section id="screen-pick" class="screen dim">
+      <div class="sheet">
+        <div class="handle"></div>
+        <div class="pick-head">
+          <img src="assets/web/icon_orb.webp" alt=""/>
+          <b>获得肉鸽宝珠！</b>
+          <span>三选一 · 只在本局生效，可叠加</span>
+        </div>
+        <div id="pick-cards" class="pick-cards"></div>
+        <button class="btn-ghost pick-refresh" id="btn-pick-refresh" type="button">
+          <img src="assets/web/icon_ad.webp" alt=""/>
+          换一批 · 看广告
+        </button>
+        <div class="pick-foot" id="pick-countdown">8 秒不选将默认中间</div>
+      </div>
+    </section>
+
+    <!-- 4 RESULT -->
+    <section id="screen-result" class="screen">
+      <div class="result-top">
+        <div class="lbl">本局结算</div>
+        <img src="assets/web/icon_coin.webp" alt=""/>
+        <div class="big" id="result-coins">+0</div>
+        <div class="sub">金币</div>
+      </div>
+      <div class="result-stats">
+        <div class="chip"><img src="assets/web/icon_shard.webp" alt=""/>碎片 +<span id="result-shards">0</span></div>
+        <div class="chip"><img src="assets/web/icon_shell_1.webp" alt=""/>碎蛋 <span id="result-eggs">0</span></div>
+      </div>
+      <div class="ad-card" id="ad-card">
+        <img src="assets/web/icon_ad.webp" alt=""/>
+        <div>
+          <b>看视频得双倍</b>
+          <i id="ad-hint">完整看完才发奖 · 约 15–30 秒</i>
+        </div>
+      </div>
+      <footer class="footer result-footer">
+        <button class="btn-ghost" id="btn-continue" type="button" hidden>
+          <img src="assets/web/icon_ad.webp" alt=""/>
+          续局 +25s · 看广告
+        </button>
+        <button class="btn-primary" id="btn-double" type="button" disabled>×2 看视频</button>
+        <button class="btn-ghost" id="btn-collect" type="button">收下</button>
+      </footer>
+    </section>
+
+    <!-- 5 VAULT -->
+    <section id="screen-vault" class="screen vault">
+      <div class="vault-hud">
+        <button class="vault-back" id="btn-vault-back" type="button">← 返回</button>
+        <b>金库爆破</b>
+        <span class="ghost">·</span>
+      </div>
+      <p class="vault-sub">砸蛋攒炸物 · 一键引爆兑现</p>
+      <div class="inv">
+        <div class="box">
+          <img src="assets/web/icon_bomb_small.webp" alt=""/>
+          <span>小爆弹 ×<span id="bomb-count">0</span></span>
+        </div>
+        <div class="box">
+          <img src="assets/web/icon_hammer_item.webp" alt=""/>
+          <span>黄金锤 ×<span id="hammer-item-count">0</span></span>
+        </div>
+        <div class="box">
+          <img src="assets/web/icon_bomb_thor.webp" alt=""/>
+          <span>雷神蛋 ×<span id="thor-count">0</span></span>
+        </div>
+      </div>
+      <div class="wall" id="vault-wall"></div>
+      <div class="vault-prize" id="vault-prize" hidden>
+        <img src="assets/web/icon_vault_chest_open.webp" alt=""/>
+        <span>清墙可得大奖</span>
+        <img src="assets/web/icon_vault_crown.webp" alt=""/>
+      </div>
+      <p class="est" id="vault-est">没有炸物，去砸蛋攒一点</p>
+      <footer class="footer">
+        <button class="btn-primary" id="btn-blast" type="button">引爆全部</button>
+      </footer>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="js/game.js"></script>
+</body>
+</html>

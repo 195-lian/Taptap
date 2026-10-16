@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <title>别砸我的蛋 · 原型</title>
+  <link rel="stylesheet" href="css/ui-prototype.css?v=smash-draft1"/>
+</head>
+<body>
+  <div id="app">
+    <section class="screen screen-cover is-active" data-screen="cover">
+      <div class="cover-art"></div>
+      <div class="cover-shade"></div>
+      <div class="cover-content">
+        <button class="primary-button cover-button" type="button" data-nav="home" data-action="enter-game" aria-label="进入游戏"><span>进入游戏</span></button>
+        <div class="cover-copy">
+          <span class="cover-kicker">森林小队 · UI 原型</span>
+          <p>一颗金蛋，一段暖呼呼的冒险。</p>
+        </div>
+      </div>
+      <span class="cover-version">视觉原型 · v0.3</span>
+    </section>
+
+    <main class="prototype">
+      <section class="screen actual-screen actual-home component-screen" data-screen="home">
+        <div class="actual-backdrop"></div>
+        <div class="actual-vignette"></div>
+        <div class="home-topbar" aria-label="资源与设置">
+          <button class="home-resource-card home-gold-card" type="button" aria-label="金币">
+            <img src="assets/home/resources/home_resource_gold_d.png" alt="">
+            <b id="gold-value">60</b>
+          </button>
+          <button class="home-resource-card home-ticket-card" type="button" data-action="claim-ticket" aria-label="领取每日券">
+            <img src="assets/home/resources/home_resource_ticket_d.png" alt="">
+            <b id="ticket-value">0</b>
+            <i class="home-notice-dot" aria-hidden="true"></i>
+          </button>
+          <button id="home-sound-button" class="home-sound-toggle" type="button" data-action="sound-panel" aria-label="声音：开启">
+            <img src="assets/home/navigation/sound/home_sound_on_b.png" alt="">
+          </button>
+        </div>
+        <div class="home-challenge" aria-label="当前关卡">
+          <div class="home-stage-badge">
+            <img src="assets/home/navigation/home_stage_badge_e.png" alt="">
+            <strong id="home-stage-label">第1关 · 青苔小径</strong>
+          </div>
+          <button class="home-challenge-button" type="button" data-nav="prep" aria-label="开始挑战当前关卡">
+            <img src="assets/home/navigation/home_challenge_button_e.png" alt="">
+            <strong>开始挑战</strong>
+          </button>
+        </div>
+        <nav class="home-entry-dock" aria-label="主页入口">
+          <button class="home-entry-button" type="button" data-nav="stage" aria-label="关卡">
+            <img src="assets/home/navigation/home_entry_stage_e.png" alt="">
+            <span>关卡</span>
+          </button>
+          <button class="home-entry-button" type="button" data-nav="smash" aria-label="捣蛋台">
+            <img src="assets/home/navigation/home_entry_smash_e.png" alt="">
+            <span>捣蛋台</span>
+          </button>
+          <button class="home-entry-button" type="button" data-nav="prep" aria-label="备战">
+            <img src="assets/home/navigation/home_entry_prep_e.png" alt="">
+            <span>备战</span>
+          </button>
+          <button class="home-entry-button" type="button" data-action="home-shop" aria-label="商城">
+            <img src="assets/home/navigation/home_entry_shop_e.png" alt="">
+            <span>商城</span>
+          </button>
+        </nav>
+      </section>
+
+      <section class="screen actual-screen actual-smash component-screen" data-screen="smash">
+        <div class="actual-backdrop"></div>
+        <div class="actual-vignette"></div>
+        <div class="smash-topbar">
+          <button class="screen-back" type="button" data-nav="home" aria-label="返回主页">‹</button>
+          <button class="home-resource-card home-gold-card" type="button" aria-label="金币">
+            <img src="assets/home/resources/home_resource_gold_d.png" alt="">
+            <b class="js-gold-value">60</b>
+          </button>
+          <button class="home-resource-card home-ticket-card" type="button" data-action="claim-ticket" aria-label="领取每日券">
+            <img src="assets/home/resources/home_resource_ticket_d.png" alt="">
+            <b class="js-ticket-value">0</b>
+            <i class="home-notice-dot" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="smash-info" aria-label="保底与免费次数">
+          <div class="smash-info-main">
+            <strong>保底 <span id="pity-value">0/35</span></strong>
+            <i class="smash-info-bar"><em id="pity-progress"></em></i>
+          </div>
+          <div class="smash-info-chips">
+            <span class="smash-chip">免费 <b id="smash-free">1</b></span>
+            <span class="smash-chip smash-chip-ad">广告 <b id="smash-ad">0</b></span>
+            <button class="smash-help" type="button" data-action="smash-help" aria-label="捣蛋规则">?</button>
+          </div>
+        </div>
+
+        <div class="smash-stage" aria-label="当前蛋">
+          <div class="smash-glow" aria-hidden="true"></div>
+          <div class="smash-egg is-wood" id="smash-egg-art" aria-hidden="true"></div>
+          <div class="smash-nest" aria-hidden="true"></div>
+        </div>
+
+        <button class="actual-smash-button smash-round" type="button" data-action="smash" aria-label="砸一下">
+          <strong id="smash-label">砸一下</strong>
+        </button>
+        <p class="smash-pay-hint">扣费：免费次数 → 广告 → 券 → 金</p>
+
+        <div class="smash-egg-rail" role="listbox" aria-label="选择蛋种">
+          <button class="egg-option is-selected" type="button" data-action="select-egg" data-egg="wood" role="option" aria-label="木蛋">
+            <span class="egg-mini is-wood" aria-hidden="true"></span>
+            <strong>木蛋</strong>
+            <small class="egg-cost">1券 / 80金</small>
+          </button>
+          <button class="egg-option" type="button" data-action="select-egg" data-egg="copper" role="option" aria-label="铜蛋">
+            <span class="egg-mini is-copper" aria-hidden="true"></span>
+            <strong>铜蛋</strong>
+            <small class="egg-cost">1券 / 120金</small>
+          </button>
+          <button class="egg-option" type="button" data-action="select-egg" data-egg="goldEgg" role="option" aria-label="黄金蛋">
+            <span class="egg-mini is-goldEgg" aria-hidden="true"></span>
+            <strong>黄金蛋</strong>
+            <small class="egg-cost">2券 / 300金</small>
+          </button>
+          <button class="egg-option" type="button" data-action="select-egg" data-egg="rainbow" role="option" aria-label="虹光蛋">
+            <span class="egg-mini is-rainbow" aria-hidden="true"></span>
+            <strong>虹光蛋</strong>
+            <small class="egg-cost">3券 / 500金</small>
+          </button>
+        </div>
+
+        <div class="smash-side-actions">
+          <button class="smash-ad-button" type="button" data-action="smash-ad" aria-label="看广告免费砸一次">看广告免费砸</button>
+          <button class="smash-skip-button" type="button" data-action="smash-skip" aria-label="跳过动画">跳过动画</button>
+        </div>
+      </section>
+
+      <section class="screen actual-screen actual-stage component-screen" data-screen="stage">
+        <div class="actual-backdrop"></div>
+        <div class="actual-vignette"></div>
+        <button class="screen-back" type="button" data-nav="home" aria-label="返回主页">‹</button>
+        <div class="stage-route">
+          <div class="route-river"></div>
+          <div class="route-line"></div>
+          <button class="route-node route-node-top" type="button" data-action="select-stage" data-stage="3" aria-label="第3关 幽影深处"><span class="stage-node-icon">🔒</span><strong>3&nbsp; 幽影深处</strong></button>
+          <button class="route-node route-node-mid" type="button" data-action="select-stage" data-stage="2" aria-label="第2关 溪涧营地"><span class="stage-node-icon">🔒</span><strong>2&nbsp; 溪涧营地</strong></button>
+          <button class="route-node route-node-current" type="button" data-action="select-stage" data-stage="1" aria-label="第1关 青苔小径"><span class="sprite item-hammer" aria-hidden="true"></span><strong>1&nbsp; 青苔小径</strong></button>
+        </div>
+        <div class="stage-bottom-note">
+          <span class="sprite character-fox" aria-hidden="true"></span>
+          <p>新的冒险<br/>在前方！</p>
+          <span class="sprite item-compass" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <section class="screen actual-screen actual-prep component-screen" data-screen="prep">
+        <div class="actual-backdrop"></div>
+        <div class="actual-vignette"></div>
+        <button class="screen-back" type="button" data-nav="home" aria-label="返回主页">‹</button>
+        <div class="prep-stage-meta" id="prep-stage-meta">第1关 · HP 10</div>
+        <div class="prep-board">
+          <button class="prep-slot prep-slot-1" type="button" data-action="add-tower" data-slot="0" aria-label="空塔位"><span class="slot-plus">＋</span></button>
+          <button class="prep-slot prep-slot-2" type="button" data-action="add-tower" data-slot="1" aria-label="空塔位"><span class="slot-plus">＋</span></button>
+          <button class="prep-slot prep-slot-3" type="button" data-action="add-tower" data-slot="2" aria-label="空塔位"><span class="slot-plus">＋</span></button>
+          <button class="prep-slot prep-slot-4" type="button" data-action="add-tower" data-slot="3" aria-label="空塔位"><span class="slot-plus">＋</span></button>
+          <div class="prep-egg-altar"><span class="sprite battle-egg-art" aria-hidden="true"></span></div>
+          <span class="prep-slime sprite character-slime" aria-hidden="true"></span>
+        </div>
+        <div class="tower-sheet">
+          <h2>选择防御塔</h2>
+          <div class="tower-options">
+            <button type="button" data-action="select-tower" data-tower="hammer" class="is-selected"><span class="sprite tower-mark tower-hammer" aria-hidden="true"></span><strong>锤炮</strong><small class="tower-stock" data-stock="hammer">×0</small></button>
+            <button type="button" data-action="select-tower" data-tower="thor"><span class="sprite tower-mark tower-thor" aria-hidden="true"></span><strong>雷神塔</strong><small class="tower-stock" data-stock="thor">×0</small></button>
+            <button type="button" data-action="select-tower" data-tower="bomb"><span class="sprite tower-mark tower-bomb" aria-hidden="true"></span><strong>炸弹塔</strong><small class="tower-stock" data-stock="bomb">×0</small></button>
+            <button type="button" data-action="select-tower" data-tower="coin"><span class="sprite tower-mark tower-coin" aria-hidden="true"></span><strong>金币炮</strong><small class="tower-stock" data-stock="coin">×0</small></button>
+          </div>
+          <button class="prep-start-button" type="button" data-action="start-wave">开始波次</button>
+        </div>
+      </section>
+
+      <section class="screen actual-screen actual-battle live-battle component-screen" data-screen="battle">
+        <div class="battle-live-backdrop"></div>
+        <div class="battle-status">
+          <div class="battle-health">
+            <span class="sprite battle-heart" aria-hidden="true"></span>
+            <div><i><em id="battle-health-bar"></em></i><b id="battle-health-text">10/10</b></div>
+          </div>
+          <strong id="battle-wave-label">第 1/5 波</strong>
+          <button class="battle-speed-badge" type="button" data-action="speed" aria-label="看广告解锁2倍速"><span class="sprite battle-speed-icon" aria-hidden="true"></span><b id="battle-speed-label">×1</b></button>
+          <button class="battle-pause-button" type="button" data-action="pause" aria-label="暂停"><span class="sprite icon-pause" aria-hidden="true"></span></button>
+        </div>
+        <div class="battle-board" id="battle-board">
+          <div class="battle-route"></div>
+          <div class="battle-towers" id="battle-towers"></div>
+          <div class="battle-actors" id="battle-actors"></div>
+          <div class="battle-egg-core"><span class="sprite battle-egg-art" aria-hidden="true"></span></div>
+        </div>
+        <div class="battle-items" id="battle-items" aria-label="道具栏"></div>
+      </section>
+
+      <section class="screen actual-screen actual-result component-screen" data-screen="result">
+        <div class="result-backdrop"></div>
+        <div class="result-vignette"></div>
+        <div class="result-panel" aria-live="polite">
+          <div class="result-stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span></div>
+          <div class="result-hero">
+            <span class="sprite character-hammer result-hero-hammer" aria-hidden="true"></span>
+            <span class="sprite character-slime result-hero-slime" aria-hidden="true"></span>
+          </div>
+          <div class="result-runtime result-banner">
+            <strong id="result-outcome">守护成功</strong>
+            <span id="result-stage-label">第1关</span>
+            <p id="result-reward">奖励结算中</p>
+          </div>
+          <div class="result-rewards">
+            <div class="result-reward-item"><span class="sprite icon-gold"></span><b id="result-gold-value">x0</b></div>
+            <div class="result-reward-item"><span class="sprite icon-ticket"></span><b id="result-ticket-value">x0</b></div>
+            <div class="result-reward-item"><span class="sprite icon-egg"></span><b id="result-egg-value">x0</b></div>
+          </div>
+          <button class="result-collect-button" type="button" data-action="collect">收下</button>
+        </div>
+      </section>
+
+      <section class="screen actual-screen actual-weapons component-screen" data-screen="weapons">
+        <div class="actual-backdrop"></div>
+        <div class="actual-vignette"></div>
+        <button class="screen-back" type="button" data-nav="home" aria-label="返回主页">‹</button>
+        <div class="weapon-panel">
+          <div class="weapon-tabs" role="tablist" aria-label="武器分类">
+            <button type="button" class="is-active" data-action="weapon-tab" data-tab="全部">全部</button>
+            <button type="button" data-action="weapon-tab" data-tab="物理">物理</button>
+            <button type="button" data-action="weapon-tab" data-tab="魔法">魔法</button>
+            <button type="button" data-action="weapon-tab" data-tab="特殊">特殊</button>
+          </div>
+          <div class="weapon-catalog" aria-label="防御塔图鉴">
+            <button class="weapon-catalog-card" type="button" data-action="equip-weapon" data-weapon="wood_hammer" aria-label="装备木弩塔">
+              <span class="sprite tower-mark tower-hammer"></span><strong>木弩塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+            <button class="weapon-catalog-card" type="button" data-action="equip-weapon" data-weapon="steel_hammer" aria-label="装备法师塔">
+              <span class="sprite tower-mark tower-thor"></span><strong>法师塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+            <button class="weapon-catalog-card" type="button" data-action="equip-weapon" data-weapon="thunder_hammer" aria-label="装备石刺塔">
+              <span class="sprite tower-mark tower-bomb"></span><strong>石刺塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+            <button class="weapon-catalog-card is-equipped" type="button" data-action="weapon-card-info" data-label="毒藤塔" aria-label="查看毒藤塔">
+              <span class="sprite tower-mark tower-coin"></span><strong>毒藤塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+            <button class="weapon-catalog-card is-equipped" type="button" data-action="weapon-card-info" data-label="火焰塔" aria-label="查看火焰塔">
+              <span class="sprite tower-mark tower-bomb"></span><strong>火焰塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+            <button class="weapon-catalog-card is-equipped" type="button" data-action="weapon-card-info" data-label="光辉塔" aria-label="查看光辉塔">
+              <span class="sprite tower-mark tower-thor"></span><strong>光辉塔</strong><small>Lv.1</small><i>✓</i>
+            </button>
+          </div>
+          <div class="weapon-badges">
+            <button type="button" data-action="weapon-badge" data-label="森林徽章"><span>◆</span></button>
+            <button type="button" data-action="weapon-badge" data-label="蓝晶徽章"><span>✦</span></button>
+            <button type="button" data-action="weapon-badge" data-label="王冠徽章"><span>♛</span></button>
+            <button type="button" data-action="weapon-badge" data-label="守护徽章"><span>♜</span></button>
+          </div>
+          <div class="weapon-manager weapon-runtime">
+            <div class="weapon-manager-head">
+              <strong>装备槽</strong>
+              <span id="weapon-owned-count">拥有 0 件</span>
+            </div>
+            <div class="weapon-slots" id="weapon-slots"></div>
+            <div class="weapon-manager-list" id="weapon-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen actual-screen actual-pause component-screen" data-screen="pause">
+        <div class="pause-backdrop"></div>
+        <div class="pause-panel">
+          <div class="pause-owl sprite character-owl" aria-hidden="true"></div>
+          <button class="pause-action primary" type="button" data-action="resume"><span class="sprite icon-play" aria-hidden="true"></span>继续游戏</button>
+          <button class="pause-action" type="button" data-action="exit-battle"><span class="sprite icon-exit" aria-hidden="true"></span>退出关卡</button>
+          <button class="pause-action" type="button" data-action="sound-panel"><span class="sprite icon-sound" aria-hidden="true"></span><span id="pause-sound-label">声音：开启</span></button>
+          <p class="pause-note">休息一下，<br/>更好的守护才会到来！</p>
+          <span class="pause-fox sprite character-fox" aria-hidden="true"></span>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="js/ui-prototype.js?v=smash-draft1"></script>
+</body>
+</html>
